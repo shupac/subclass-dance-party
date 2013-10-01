@@ -28,9 +28,9 @@
         $('.lineup').on("click", function(event){
           event.preventDefault();
           for(var i = 0; i < window.dancers.length; i++){
-            var space = $('body').height() / 20;
+            var space = ($('body').height() - 40) / 20;
             var column = Math.floor(i / space) * 20;
-            window.dancers[i].setPosition(i*20-space*column, column);
+            window.dancers[i].setPosition(40+i*20-space*column, column);
           }
         });
 
