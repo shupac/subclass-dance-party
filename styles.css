@@ -35,6 +35,11 @@ body, a:link, a:visited, a:active{
   border-color: yellow;
 }
 .large{
-  border:25px solid red;
-  border-radius: 25px;
+  border:30px solid red;
+  border-radius:30px;
+  margin:-20px 0 0 -20px;
+}
+.small{
+  border:10px solid red;
+  border-radius:10px;
 }
