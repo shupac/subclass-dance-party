@@ -25,3 +25,16 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   position:absolute;
 }
+.blue{
+  border-color: blue;
+}
+.green{
+  border-color: green;
+}
+.yellow{
+  border-color: yellow;
+}
+.large{
+  border:25px solid red;
+  border-radius: 25px;
+}
