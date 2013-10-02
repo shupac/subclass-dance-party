@@ -22,8 +22,8 @@ Peg.prototype.add = function(x1, y1, x2, y2) {
 
   var pegNode = $('<span class="peg"></span>');
   var styleSettings = {
-    'top': x1-radius,
-    'left': y1-radius,
+    'top': y1-radius,
+    'left': x1-radius,
     'border-width':radius,
     'border-radius':radius,
     'position':'absolute'

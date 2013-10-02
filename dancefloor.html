@@ -69,22 +69,30 @@
           }
         });
 
-        $(document).mousedown(function(event){
-          if(event.pageY > 32) {
-            if(event.which === 3) { // pop dancers
-              event.preventDefault();
-              for(var i = 0; i < window.dancers.length; i++) {
-                window.dancers[i].randDir();
-                window.dancers[i].setPosition(event.pageY, event.pageX);
-                if(!window.dancers[i].moving) {
-                  window.dancers[i].startMoving();
-                }
-              }
-            }
-          }
+        $(document).keydown(function(e){
+          // if(e.shiftKey) {
+          //   $(document).mousedown(function(event){
+          //     if(event.pageY > 32) {
+          //       if(event.which === 1) { // pop dancers
+          //         event.preventDefault();
+                  for(var i = 0; i < window.dancers.length; i++) {
+                    window.dancers[i].randDir();
+                    window.dancers[i].setPosition(height/2, width/2);
+                    if(!window.dancers[i].moving) {
+                      window.dancers[i].startMoving();
+                    }
+                  }
+          //       }
+          //     }
+          //   });
+          // }
         });
         var dragEvent = function() {
           var startX, startY, endX, endY;
+          $('body').on('mousemove', function(event) {
+            console.clear();
+            console.log(event.pageX, event.pageY);
+          });
           $('body').on('mousedown', function(event){
             if(event.pageY > 32 && event.which === 1) {
                 startX = event.pageX;
@@ -96,20 +104,21 @@
             if(event.pageY > 32 && event.which === 1) {
               endX = event.pageX;
               endY = event.pageY;
-              console.log(endX, endY);
+              // console.log(endX, endY);
+              // debugger;
               var newPeg = pegs.add(startX, startY, endX, endY);
-              console.log(newPeg);
+              // console.log(newPeg);
               $('body').append(newPeg);
-              console.log(pegs);
+              // console.log(pegs);
             }
           });
         }
 
-        // dragEvent();
+        dragEvent();
 
-        var newPeg = pegs.add(100, 100, 150, 150);
-        console.log(newPeg);
-        $('body').append(newPeg);
+        // var newPeg = pegs.add(100, 100, 150, 150);
+        // console.log(newPeg);
+        // $('body').append(newPeg);
 
 
         $(".addDancerButton").on("click", function(event){

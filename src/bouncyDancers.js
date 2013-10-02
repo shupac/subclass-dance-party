@@ -34,7 +34,7 @@ BouncyDancer.prototype.move = function() {
     this.direction = Math.atan(this.vertical/this.horizontal);
   }
   // debugger;
-  if(!pegs.free(this.top + this.vertical + 10, this.left + this.horizontal + 10, 10)) {
+  if(!pegs.free(this.left + this.horizontal + 10, this.top + this.vertical + 10, 10)) {
     console.log('hit peg');
     this.direction += Math.PI;
     this.horizontal = this.distance * Math.cos(this.direction);
