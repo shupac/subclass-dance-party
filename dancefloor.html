@@ -58,40 +58,55 @@
         })
 
         $('.lineup').on('click', function() {
-          console.log('clicked');
           var space = 20;
           var size = 20;
           for(var i = 0; i < window.dancers.length; i++) {
             var column = Math.floor(i/space);
             window.dancers[i].setPosition(200+ i % space * size, column * size);
             window.dancers[i].stopMoving();
-            // console.log(column);
-            // Dancer.prototype.setPosition.call(window.dancers[i], 200+ i % space * size, column * size);
-          }
-        });
-        $('body').on('click', function(event){
-          if(event.which === 3) {
-            event.preventDefault();
-            console.log('right click');
           }
         });
 
         $(document).mousedown(function(event){
-          if(event.which === 3) {
-            event.preventDefault();
-            console.log('right');
-          }
-        })
-
-        $('body').on('click', function(event) {
-          if(event.pageY > 32 && event.which === 1) {
-            event.preventDefault();
-            for(var i = 0; i < window.dancers.length; i++) {
-              window.dancers[i].randDir();
-              window.dancers[i].setPosition(event.pageY, event.pageX);
+          if(event.pageY > 32) {
+            if(event.which === 3) { // pop dancers
+              event.preventDefault();
+              for(var i = 0; i < window.dancers.length; i++) {
+                window.dancers[i].randDir();
+                window.dancers[i].setPosition(event.pageY, event.pageX);
+                if(!window.dancers[i].moving) {
+                  window.dancers[i].startMoving();
+                }
+              }
             }
           }
         });
+        var dragEvent = function() {
+          var startX, startY, endX, endY;
+          $('body').on('mousedown', function(event){
+            if(event.which === 1) {
+                startX = event.pageX;
+                startY = event.pageY;
+              }
+          });
+
+          $('body').on('mouseup', function(){
+            if(event.which === 1) {
+              endX = event.pageX;
+              endY = event.pageY;
+              drawBox();
+            }
+          });
+
+          var drawBox = function() {
+            console.log(startX, startY);
+            console.log(endX, endY);
+          }
+        }
+
+        dragEvent();
+
+
         $(".addDancerButton").on("click", function(event){
           var dancerMakerFunctionName = $(this).data("dancer-maker-function-name");
 

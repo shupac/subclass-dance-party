@@ -7,8 +7,12 @@ var BouncyDancer = function(top, left, timeBetweenSteps){
   this.distance = 5;
   this.horizontal = this.distance * Math.cos(this.direction);
   this.vertical = this.distance * Math.sin(this.direction);
+
   var scheduleMove = this.move.bind(this);
-  this.scheduleID = setInterval(function() {scheduleMove();}, 10);
+  this.scheduleID = setInterval(function() {
+    scheduleMove();
+  }, 10);
+  this.moving = true;
 };
 
 BouncyDancer.prototype = Object.create(Dancer.prototype);
@@ -27,23 +31,20 @@ BouncyDancer.prototype.move = function() {
   if(this.left + this.horizontal + 20 > width || this.left + this.horizontal < 0) {
     this.horizontal *= -1;
   }
-  // console.log(this.top, this.vertical);
-  // // bounce bottom - going right, direction *= -1;
-  // // bounce bottom - going left, direction = 
-  // // bounce top - going right, direction *= -1;
-  // // bounce top - going left, 2PI - direction
-  // // bounce right - going up, direction = PI - direction;
-  // // bounce right - going down, direction = 
-  // // debugger;
-  // if(!isNaN(this.vertical)) 
     this.top += this.vertical;
-  // if(!isNaN(this.horizontal)) 
     this.left += this.horizontal;
   this.setPosition(this.top, this.left);
 };
 
 BouncyDancer.prototype.stopMoving = function() {
   clearInterval(this.scheduleID);
+  this.moving = false;
+};
+
+BouncyDancer.prototype.startMoving = function() {
+  var dancer = this;
+  this.scheduleID = setInterval(function() {dancer.move();}, 10);
+  this.moving = true;
 };
 
 BouncyDancer.prototype.setPosition = function(top, left){
