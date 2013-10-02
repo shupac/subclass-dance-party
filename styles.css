@@ -25,6 +25,12 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   position:absolute;
 }
+.peg{
+  border-color:red;
+  border-style:solid;
+  /*border-radius: 50px;*/
+  position:absolute;
+}
 .yellow{
   border:10px solid yellow;
   border-radius:10px;

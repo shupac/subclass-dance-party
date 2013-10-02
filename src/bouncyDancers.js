@@ -27,9 +27,18 @@ BouncyDancer.prototype.randDir = function() {
 BouncyDancer.prototype.move = function() {
   if(this.top + this.vertical + 20 > height || this.top + this.vertical < 32) {
     this.vertical *= -1;
+    this.direction = Math.atan(this.vertical/this.horizontal);
   }
   if(this.left + this.horizontal + 20 > width || this.left + this.horizontal < 0) {
     this.horizontal *= -1;
+    this.direction = Math.atan(this.vertical/this.horizontal);
+  }
+  // debugger;
+  if(!pegs.free(this.top + this.vertical + 10, this.left + this.horizontal + 10, 10)) {
+    console.log('hit peg');
+    this.direction += Math.PI;
+    this.horizontal = this.distance * Math.cos(this.direction);
+    this.vertical = this.distance * Math.sin(this.direction);
   }
     this.top += this.vertical;
     this.left += this.horizontal;

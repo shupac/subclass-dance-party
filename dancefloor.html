@@ -9,12 +9,13 @@
     <script src="src/colorDancer.js"></script>
     <script src="src/movingDancers.js"></script>
     <script src="src/bouncyDancers.js"></script>
+    <script src="src/peg.js"></script>
   </head>
   <body>
 
     <div class="topbar">
       <span class="title">object dance party</span>
-      Number of Dancers: <input class="numDancers" type="text" size="2" value="20"></input>
+      Number of Dancers: <input class="numDancers" type="text" size="2" value="1"></input>
       Type of Dancers: <select name="typeDancers" class="typeDancers">
         <option value="BlinkyDancer">Blinky</option>
         <option value="ColorDancer">Color</option>
@@ -38,6 +39,7 @@
     }
       $(document).ready(function(){
         window.dancers = [];
+        window.pegs = new Peg();
         window.oncontextmenu = function() { return false };
         $('.addDancers').on('click', function(){
           var refresh = Math.random() * 1000;
@@ -84,27 +86,30 @@
         var dragEvent = function() {
           var startX, startY, endX, endY;
           $('body').on('mousedown', function(event){
-            if(event.which === 1) {
+            if(event.pageY > 32 && event.which === 1) {
                 startX = event.pageX;
                 startY = event.pageY;
               }
           });
 
           $('body').on('mouseup', function(){
-            if(event.which === 1) {
+            if(event.pageY > 32 && event.which === 1) {
               endX = event.pageX;
               endY = event.pageY;
-              drawBox();
+              console.log(endX, endY);
+              var newPeg = pegs.add(startX, startY, endX, endY);
+              console.log(newPeg);
+              $('body').append(newPeg);
+              console.log(pegs);
             }
           });
-
-          var drawBox = function() {
-            console.log(startX, startY);
-            console.log(endX, endY);
-          }
         }
 
-        dragEvent();
+        // dragEvent();
+
+        var newPeg = pegs.add(100, 100, 150, 150);
+        console.log(newPeg);
+        $('body').append(newPeg);
 
 
         $(".addDancerButton").on("click", function(event){
