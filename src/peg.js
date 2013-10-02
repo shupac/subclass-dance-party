@@ -27,7 +27,7 @@ Peg.prototype.add = function(x1, y1, x2, y2) {
     'border-width':radius,
     'border-radius':radius,
     'position':'absolute'
-  };
+  }
   pegNode.css(styleSettings);
   return pegNode;
 };
