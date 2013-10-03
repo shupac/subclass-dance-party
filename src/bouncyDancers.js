@@ -3,7 +3,7 @@ var BouncyDancer = function(top, left, timeBetweenSteps){
   this.$node.addClass('yellow');
   this.$node.addClass('movers');
   this.direction = Math.random()*2*Math.PI;
-  // this.direction = 0.3*Math.PI;
+
   this.distance = 5;
   this.horizontal = this.distance * Math.cos(this.direction);
   this.vertical = this.distance * Math.sin(this.direction);
@@ -11,7 +11,7 @@ var BouncyDancer = function(top, left, timeBetweenSteps){
   var scheduleMove = this.move.bind(this);
   this.scheduleID = setInterval(function() {
     scheduleMove();
-  }, 10);
+  }, 8);
   this.moving = true;
 };
 
@@ -25,23 +25,23 @@ BouncyDancer.prototype.randDir = function() {
 };
 
 BouncyDancer.prototype.move = function() {
-  if(this.top + this.vertical + 20 > height || this.top + this.vertical < 32) {
+  var newTop = this.top + this.vertical;
+  var newLeft = this.left + this.horizontal;
+  if(newTop + 20 > height || newTop < 32) {
     this.vertical *= -1;
     this.direction = Math.atan(this.vertical/this.horizontal);
   }
-  if(this.left + this.horizontal + 20 > width || this.left + this.horizontal < 0) {
+  if(newLeft + 20 > width || newLeft < 0) {
     this.horizontal *= -1;
     this.direction = Math.atan(this.vertical/this.horizontal);
   }
-  // debugger;
-  if(!pegs.free(this.left + this.horizontal + 10, this.top + this.vertical + 10, 10)) {
-    console.log('hit peg');
-    this.direction += Math.PI;
-    this.horizontal = this.distance * Math.cos(this.direction);
-    this.vertical = this.distance * Math.sin(this.direction);
+
+  var peg  = pegs.free(this.left + this.horizontal + 10, this.top + this.vertical + 10, 10);
+  if(peg !== true) {
+    this.reflect(peg);
   }
-    this.top += this.vertical;
-    this.left += this.horizontal;
+  this.top += this.vertical;
+  this.left += this.horizontal;
   this.setPosition(this.top, this.left);
 };
 
@@ -63,5 +63,24 @@ BouncyDancer.prototype.setPosition = function(top, left){
     top: top,
     left: left
   };
-  this.$node.animate(styleSettings, 10);
+  this.$node.animate(styleSettings, 5);
 };
+
+BouncyDancer.prototype.reflect = function(peg) {
+  var pegX = peg[0];
+  var pegY = peg[1];
+  var pegZ = peg[2];
+  var nScalar = Peg.prototype.distance(pegX, pegY, this.left, this.top);
+  var nUnitX = (pegX - this.left)/nScalar;
+  var nUnitY = (pegY - this.top)/nScalar;
+  var a = -this.horizontal*nUnitX - this.vertical*nUnitY;
+  var aVecX = a*nUnitX;
+  var aVecY = a*nUnitY;
+  var bVecX = -this.horizontal - aVecX;
+  var bVecY = -this.vertical - aVecY;
+  var newDX = aVecX - bVecX;
+  var newDY = aVecY - bVecY;
+  this.horizontal = newDX;
+  this.vertical = newDY;
+  this.direction = Math.atan(this.vertical/this.horizontal);
+}

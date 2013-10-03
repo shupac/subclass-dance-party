@@ -4,13 +4,12 @@ var Peg = function() {
 
 Peg.prototype.free = function(objX, objY, objR) {
   for(var i = 0; i < this.pegArr.length; i++) {
-    // debugger;
     var pegX = this.pegArr[i][0];
     var pegY = this.pegArr[i][1];
     var pegR = this.pegArr[i][2];
 
     if(this.distance(pegX, pegY, objX, objY) < pegR + objR) {
-      return false;
+      return this.pegArr[i];
     }
   }
   return true;
